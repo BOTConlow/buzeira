@@ -219,6 +219,10 @@ export const ModalContent = styled('div', {
   color: '#DADADA',
   animation: `${FadeIn} 0.3s ease`,
 
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
+
   h6: {
     width: '100%',
     fontSize: '1rem',
