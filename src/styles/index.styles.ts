@@ -34,7 +34,7 @@ export const Box1 = styled('div', {
   background: '#191919',
   borderRadius: 20,
   padding: '1rem',
-  gap: '.5rem',
+  gap: '.8rem',
 })
 
 export const ImageBox1 = styled('div', {
@@ -255,5 +255,112 @@ export const InputDiv = styled('div', {
     background: '#6C757D',
     borderTopRightRadius: '5px',
     borderBottomRightRadius: '5px',
+  },
+})
+
+export const Box3 = styled('div', {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  gap: '10px',
+  padding: '10px',
+  borderRadius: '10px',
+  background: '#101010',
+})
+
+export const Box4 = styled('div', {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  flexWrap: 'wrap',
+  gap: '8px',
+})
+
+export const Box5 = styled('div', {
+  width: '40%',
+  minWidth: '130px',
+  minHeight: '80px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '8px',
+  borderRadius: '5px',
+  background: 'rgba(0,0,0,.1)',
+  cursor: 'pointer',
+  position: 'relative',
+
+  h3: {
+    color: '#A1A1A1',
+    fontWeight: '500',
+    fontSize: 'calc(1.3rem + .6vw)',
+  },
+
+  p: {
+    fontSize: '.8em',
+    color: '#EDEDED',
+    textTransform: 'uppercase',
+  },
+
+  small: {
+    fontSize: '20px',
+    color: '#212529',
+  },
+
+  variants: {
+    popular: {
+      true: {
+        border: '2px solid #198754',
+        position: 'relative',
+        background: 'Black',
+
+        h3: {
+          fontSize: '1.8em',
+        },
+
+        '&::before': {
+          content: '"Mais popular"',
+          position: 'absolute',
+          background: '#198754',
+          padding: '4px',
+          borderRadius: '20px',
+          fontSize: '.8em',
+          width: '110px',
+          color: '#fff',
+          zIndex: 2,
+          top: '-14px',
+        },
+      },
+    },
+  },
+})
+
+export const Quant = styled('div', {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '10px',
+
+  input: {
+    width: '45%',
+    textAlign: 'center',
+    padding: '6px 12px',
+    borderRadius: '10px',
+    fontSize: '1.4em',
+    fontWeight: '600',
+    background: '#0E0E0E',
+    color: '#fff',
+    border: '1px solid #202020  ',
+    appearance: 'none',
+
+    '@media (max-width: 768px)': {
+      width: '100%',
+    },
   },
 })

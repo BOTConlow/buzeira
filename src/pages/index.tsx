@@ -6,6 +6,9 @@ import {
   Adquira,
   Box1,
   Box2,
+  Box3,
+  Box4,
+  Box5,
   Header1,
   Header2,
   Headline,
@@ -17,6 +20,7 @@ import {
   ModalContent,
   ModalOverlay,
   Preco,
+  Quant,
   Redes1,
   Redes2,
   Vernumber,
@@ -30,7 +34,13 @@ import Icon2 from '../../public/icon2.svg'
 import Icon3 from '../../public/icon3.svg'
 import Icon4 from '../../public/icon4.svg'
 import { ChangeEvent, useState } from 'react'
-import { CheckCircle, ShoppingCart, X } from 'phosphor-react'
+import {
+  CheckCircle,
+  MinusCircle,
+  PlusCircle,
+  ShoppingCart,
+  X,
+} from 'phosphor-react'
 
 const Vietnam = Montserrat({
   subsets: ['latin'],
@@ -70,17 +80,13 @@ export default function Home() {
     }
   }
 
-  const handleQuantidadeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let novaQuantidade = parseInt(event.target.value)
-    // Verificar se a nova quantidade é maior ou igual a 7
-    if (novaQuantidade < 7) {
-      novaQuantidade = 7 // Definir a quantidade mínima como 7 se for menor que isso
-    }
+  const handleCompra = (qtd: number) => {
+    const novaQuantidade: number = qtd
     setQuantidade(novaQuantidade)
   }
 
-  const handleCompra = (qtd: number) => {
-    const novaQuantidade: number = qtd
+  const handleCompra2 = (qtd: number) => {
+    const novaQuantidade: number = Math.max(7, quantidade + qtd)
     setQuantidade(novaQuantidade)
   }
 
@@ -225,11 +231,74 @@ export default function Home() {
             <ShoppingCart size={14} color="#fff" />
             Ver meus números
           </Vernumber>
+          <Box3>
+            <p
+              style={{
+                paddingTop: '8px',
+                marginBottom: '1rem',
+                color: '#EDEDED',
+                fontSize: '.9em',
+              }}
+            >
+              Selecione a quantidade de números
+            </p>
+            <Box4>
+              <Box5 onClick={() => handleCompra2(1)}>
+                <h3>
+                  <small>+</small>
+                  01
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+              <Box5 popular="true" onClick={() => handleCompra2(2)}>
+                <h3>
+                  <small>+</small>
+                  02
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+              <Box5 onClick={() => handleCompra2(5)}>
+                <h3>
+                  <small>+</small>
+                  05
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+              <Box5 onClick={() => handleCompra2(10)}>
+                <h3>
+                  <small>+</small>
+                  10
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+              <Box5 onClick={() => handleCompra2(50)}>
+                <h3>
+                  <small>+</small>
+                  50
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+              <Box5 onClick={() => handleCompra2(100)}>
+                <h3>
+                  <small>+</small>
+                  100
+                </h3>
+                <p>Selecionar</p>
+              </Box5>
+            </Box4>
+            <Quant>
+              <button onClick={() => handleCompra2(-1)}>
+                <MinusCircle size={25} color="#fff" />
+              </button>
+              <input type="text" value={quantidade} readOnly />
+              <button onClick={() => handleCompra2(+1)}>
+                <PlusCircle size={25} color="#fff" />
+              </button>
+            </Quant>
+          </Box3>
           <div>
-            <h2>Produto</h2>
             <p>Preço por cota: R$ {getPrecoPorCota(quantidade).toFixed(2)}</p>
             <p>Total: R$ {total.toFixed(2)}</p>
-            <span>{quantidade}</span>
           </div>
         </Box1>
 
@@ -246,7 +315,7 @@ export default function Home() {
               <h6>
                 Consulta de compras{' '}
                 <button onClick={closeModal}>
-                  <X size={25} />
+                  <X size={25} color="#000" />
                 </button>
               </h6>
             </ModalContent>
