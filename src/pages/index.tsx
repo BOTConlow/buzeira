@@ -9,8 +9,10 @@ import {
   Box3,
   Box4,
   Box5,
+  Footer,
   Header1,
   Header2,
+  Header3,
   Headline,
   ImageBox1,
   ImageBox2,
@@ -19,6 +21,7 @@ import {
   MainContainer,
   ModalContent,
   ModalOverlay,
+  Participar,
   Preco,
   Quant,
   Redes1,
@@ -119,7 +122,9 @@ export default function Home() {
       <MainContainer className={Vietnam.className}>
         <Header1>
           <Header2>
-            <Image src={Logo} quality={100} alt="logo" width={185} />
+            <Header3>
+              <Image src={Logo} quality={100} alt="logo" />
+            </Header3>
           </Header2>
         </Header1>
         <Box1>
@@ -296,11 +301,23 @@ export default function Home() {
               </button>
             </Quant>
           </Box3>
+          <Participar>
+            <span>
+              <CheckCircle size={16} />
+              Participar do sorteio
+            </span>
+            <small>R$ {total.toFixed(2)}</small>
+          </Participar>
           <div>
             <p>Preço por cota: R$ {getPrecoPorCota(quantidade).toFixed(2)}</p>
-            <p>Total: R$ {total.toFixed(2)}</p>
           </div>
         </Box1>
+        <Footer>
+          <p>
+            Copyright © 2022 <b>ALTO PRÊMIO</b>
+          </p>
+          <p>Todos os direitos reservados.</p>
+        </Footer>
 
         {modalVisible && (
           <ModalOverlay onClick={closeModal}>

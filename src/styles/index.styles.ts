@@ -15,14 +15,45 @@ export const Header1 = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  background: '#101010',
-  padding: '1rem',
+  height: '70px',
+
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
 })
 
 export const Header2 = styled('div', {
+  width: '100vw',
+  height: '70px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: '1000',
+  background: '#101010',
+  position: 'fixed',
+
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
+})
+
+export const Header3 = styled('div', {
   width: 600,
   display: 'flex',
   justifyContent: 'left',
+  alignItems: 'center',
+  zIndex: '1000',
+  position: 'fixed',
+
+  img: {
+    width: '185px',
+    height: 'auto',
+  },
+
+  '@media (max-width: 768px)': {
+    width: '100%',
+    padding: '0 12px',
+  },
 })
 
 export const Box1 = styled('div', {
@@ -363,4 +394,34 @@ export const Quant = styled('div', {
       width: '100%',
     },
   },
+})
+
+export const Participar = styled('button', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  padding: '8px 12px',
+  gap: '30%',
+  borderRadius: '.375rem',
+  background: '#198754',
+  color: '#fff',
+  fontWeight: '600',
+  fontSize: '1rem',
+
+  span: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '.3rem',
+  },
+})
+
+export const Footer = styled('footer', {
+  width: '100vw',
+  padding: '1rem',
+  textAlign: 'center',
+  background: '#191919',
+  color: '#e0e0e0',
+  fontSize: '.8em',
+  lineHeight: '170%',
 })
