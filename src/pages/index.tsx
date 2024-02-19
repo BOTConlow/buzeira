@@ -303,7 +303,7 @@ export default function Home() {
           </Box3>
           <Participar>
             <span>
-              <CheckCircle size={16} />
+              <CheckCircle size={16} weight="bold" />
               Participar do sorteio
             </span>
             <small>R$ {total.toFixed(2)}</small>

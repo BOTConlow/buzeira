@@ -409,6 +409,10 @@ export const Participar = styled('button', {
   fontWeight: '600',
   fontSize: '1rem',
 
+  '@media (max-width: 768px)': {
+    gap: '14%',
+  },
+
   span: {
     display: 'flex',
     alignItems: 'center',
