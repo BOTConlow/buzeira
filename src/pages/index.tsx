@@ -4,23 +4,26 @@ import Head from 'next/head'
 import { Montserrat } from 'next/font/google'
 import {
   Adquira,
+  Alert,
   Box1,
   Box2,
   Box3,
   Box4,
   Box5,
+  Continuar,
   Footer,
-  Header1,
-  Header2,
-  Header3,
   Headline,
   ImageBox1,
   ImageBox2,
   ImageBox3,
   InputDiv,
+  InputDiv2,
   MainContainer,
+  Mensagem,
   ModalContent,
+  ModalContent2,
   ModalOverlay,
+  ModalOverlay2,
   Participar,
   Preco,
   Quant,
@@ -30,28 +33,57 @@ import {
 } from '@/styles/index.styles'
 import Image from 'next/image'
 
-import Logo from '../../public/logo.jpg'
 import Foto from '../../public/foto.jpeg'
 import Icon1 from '../../public/icon1.svg'
 import Icon2 from '../../public/icon2.svg'
 import Icon3 from '../../public/icon3.svg'
 import Icon4 from '../../public/icon4.svg'
 import { ChangeEvent, useState } from 'react'
+import * as z from 'zod'
 import {
+  ArrowCircleRight,
+  ArrowRight,
   CheckCircle,
   MinusCircle,
   PlusCircle,
   ShoppingCart,
+  WarningCircle,
   X,
 } from 'phosphor-react'
+import Header from '@/components/Header'
 
 const Vietnam = Montserrat({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 })
 
+const registerDto = z.object({
+  nome: z
+    .string()
+    .min(3, 'Por favor, digite seu nome completo.')
+    .includes(' ', { message: 'Por favor, digite seu nome completo.' }),
+  email: z.string().email('Por favor, digite um e-mail válido.'),
+  celular: z.string().min(15, 'Por favor, digite um telefone válido'),
+  dataNascimento: z
+    .string()
+    .min(10, 'Por favor, digite uma data de nascimento válida (dd/mm/aaaa)'),
+  cpf: z.string().min(11, 'Por favor, digite um CPF válido'),
+})
+
+type RegisterDTO = z.infer<typeof registerDto>
+
 export default function Home() {
+  const [page, setPage] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible2, setModalVisible2] = useState(false)
+  const [quantidade, setQuantidade] = useState(7) // Definindo quantidade inicial como 7
+  // eslint-disable-next-line prettier/prettier
+  const precoUnitarioInicial = 1.50 // Preço unitário por cota
+  const total: number = quantidade * getPrecoPorCota(quantidade)
+  const [registerForm, setRegisterForm] = useState({} as RegisterDTO)
+  const [mensagemSucess, setMensagemSucess] = useState('')
+  const [mensagemError, setMensagemError] = useState('')
+  const [telefone, setTelefone] = useState('')
 
   const openModal = () => {
     setModalVisible(true)
@@ -61,11 +93,13 @@ export default function Home() {
     setModalVisible(false)
   }
 
-  const [quantidade, setQuantidade] = useState(7) // Definindo quantidade inicial como 7
-  // eslint-disable-next-line prettier/prettier
-  const precoUnitarioInicial = 1.50 // Preço unitário por cota
-  const total: number = quantidade * getPrecoPorCota(quantidade)
-  const [telefone, setTelefone] = useState('')
+  const openModal2 = () => {
+    setModalVisible2(true)
+  }
+
+  const closeModal2 = () => {
+    setModalVisible2(false)
+  }
 
   function getPrecoPorCota(quantidade: number): number {
     if (quantidade >= 1000) {
@@ -93,6 +127,22 @@ export default function Home() {
     setQuantidade(novaQuantidade)
   }
 
+  const handleCelularChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputCelular = event.target.value.replace(/\D/g, '')
+    let formattedCelular = inputCelular
+      .replace(/^(\d{2})(\d)/g, '($1) $2')
+      .replace(/(\d{5})(\d)/, '$1-$2')
+
+    if (formattedCelular.length > 15) {
+      formattedCelular = formattedCelular.substr(0, 15)
+    }
+
+    setRegisterForm((prevRegister) => ({
+      ...prevRegister,
+      celular: formattedCelular,
+    }))
+  }
+
   const handleTelefoneChange = (event: ChangeEvent<HTMLInputElement>) => {
     // Aplicar a máscara de telefone
     const inputTelefone = event.target.value.replace(/\D/g, '')
@@ -103,8 +153,60 @@ export default function Home() {
     setTelefone(formattedTelefone)
   }
 
+  const handleDataNascimentoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // Formatando a data de nascimento enquanto o usuário digita
+    const inputDataNascimento = event.target.value.replace(/\D/g, '')
+    let formattedDataNascimento = inputDataNascimento
+      .replace(/^(\d{2})(\d)/, '$1/$2')
+      .replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3')
+
+    // Limitando o tamanho da data de nascimento
+    if (formattedDataNascimento.length > 10) {
+      formattedDataNascimento = formattedDataNascimento.substr(0, 10)
+    }
+
+    setRegisterForm((prevRegister) => ({
+      ...prevRegister,
+      dataNascimento: formattedDataNascimento,
+    }))
+  }
+
+  const handleCpfChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // Formatando o CPF enquanto o usuário digita
+    const inputCpf = event.target.value.replace(/\D/g, '')
+    let formattedCpf = inputCpf
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+
+    // Limitando o tamanho do CPF
+    if (formattedCpf.length > 14) {
+      formattedCpf = formattedCpf.substr(0, 14)
+    }
+
+    setRegisterForm((prevRegister) => ({
+      ...prevRegister,
+      cpf: formattedCpf,
+    }))
+  }
+
   const handleConsultaCompra = () => {
     alert('Nenhum registro de compra foi encontrado')
+  }
+
+  const handleSubmit = () => {
+    const validationResult = registerDto.safeParse(registerForm)
+    if (validationResult.success) {
+      console.log('Formulário válido:', registerForm)
+      setMensagemSucess('Formulário enviado com sucesso!')
+      setMensagemError('')
+    } else {
+      const errorMessages = validationResult.error.errors.map(
+        (error) => error.message,
+      )
+      setMensagemError(errorMessages.join(' '))
+      setMensagemSucess('')
+    }
   }
 
   return (
@@ -120,13 +222,7 @@ export default function Home() {
       </Head>
 
       <MainContainer className={Vietnam.className}>
-        <Header1>
-          <Header2>
-            <Header3>
-              <Image src={Logo} quality={100} alt="logo" />
-            </Header3>
-          </Header2>
-        </Header1>
+        <Header />
         <Box1>
           <ImageBox1>
             <ImageBox2>
@@ -301,7 +397,7 @@ export default function Home() {
               </button>
             </Quant>
           </Box3>
-          <Participar>
+          <Participar onClick={openModal2}>
             <span>
               <CheckCircle size={16} weight="bold" />
               Participar do sorteio
@@ -357,6 +453,145 @@ export default function Home() {
               </InputDiv>
             </ModalContent>
           </ModalOverlay>
+        )}
+
+        {modalVisible2 && (
+          <ModalOverlay2>
+            <ModalContent2
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                borderBottom: '1px solid rgba(255, 255, 255, .1)',
+              }}
+            >
+              <h6>
+                Checkout{' '}
+                <button onClick={closeModal2}>
+                  <X size={25} color="#000" />
+                </button>
+              </h6>
+            </ModalContent2>
+            <ModalContent2 onClick={(e) => e.stopPropagation()}>
+              <Alert type="one">
+                <p>
+                  <CheckCircle size={15} color="#055160" />
+                  Você está adquirindo <span>{quantidade} títulos</span> da ação
+                  entre amigos <span>Ação milionária</span> , seus números serão
+                  gerados assim que concluir a compra.
+                </p>
+              </Alert>
+              {page === 0 ? (
+                <>
+                  <InputDiv2>
+                    <label>Celular</label>
+                    <input
+                      type="text"
+                      value={registerForm.celular}
+                      onChange={handleCelularChange}
+                      maxLength={15}
+                    />
+                  </InputDiv2>
+                  <Alert type="two">
+                    <WarningCircle size={15} color="#055160" />
+                    <p>Informe seu telefone para continuar.</p>
+                  </Alert>
+                  <Continuar
+                    onClick={() => {
+                      setPage(1)
+                    }}
+                  >
+                    Continuar
+                    <ArrowRight size={16} weight="bold" />
+                  </Continuar>
+                </>
+              ) : page === 1 ? (
+                <>
+                  <InputDiv2>
+                    <label>Nome completo</label>
+                    <input
+                      type="text"
+                      value={registerForm.nome}
+                      onChange={(e) =>
+                        setRegisterForm((prevRegister) => ({
+                          ...prevRegister,
+                          nome: e.target.value,
+                        }))
+                      }
+                    />
+                  </InputDiv2>
+                  <InputDiv2>
+                    <label>E-mail</label>
+                    <input
+                      type="text"
+                      value={registerForm.email}
+                      onChange={(e) =>
+                        setRegisterForm((prevRegister) => ({
+                          ...prevRegister,
+                          email: e.target.value,
+                        }))
+                      }
+                    />
+                  </InputDiv2>
+                  <InputDiv2>
+                    <label>Celular</label>
+                    <input
+                      type="text"
+                      value={registerForm.celular}
+                      onChange={handleCelularChange}
+                      maxLength={15}
+                    />
+                  </InputDiv2>
+                  <InputDiv2>
+                    <label>Data de Nascimento</label>
+                    <input
+                      type="text"
+                      value={registerForm.dataNascimento}
+                      onChange={handleDataNascimentoChange}
+                      maxLength={10}
+                    />
+                  </InputDiv2>
+                  <InputDiv2>
+                    <label>CPF</label>
+                    <input
+                      type="text"
+                      value={registerForm.cpf}
+                      onChange={handleCpfChange}
+                      maxLength={14}
+                    />
+                  </InputDiv2>
+                  <Alert type="two">
+                    <WarningCircle size={15} color="#055160" />
+                    <p>
+                      Informe os dados corretos para recebimento das premiações.
+                    </p>
+                  </Alert>
+                  <p
+                    style={{
+                      textAlign: 'left',
+                      fontSize: '.9em',
+                      color: '#7B7F83BF',
+                    }}
+                  >
+                    Ao realizar este pagamento e confirmar minha participação
+                    nesta ação entre amigos, declaro ter lido e concordado com
+                    os <span style={{ color: '#fff' }}>termos de uso</span>{' '}
+                    desta plataforma.
+                  </p>
+                  <Continuar color="green" onClick={handleSubmit}>
+                    Concluir cadastro e pagar
+                    <ArrowCircleRight size={16} />
+                  </Continuar>
+                </>
+              ) : (
+                ''
+              )}
+              {mensagemError && (
+                <Mensagem result={'error'}>{mensagemError}</Mensagem>
+              )}
+              {mensagemSucess && (
+                <Mensagem result={'sucess'}>{mensagemSucess}</Mensagem>
+              )}
+            </ModalContent2>
+          </ModalOverlay2>
         )}
       </MainContainer>
     </>

@@ -10,52 +10,6 @@ export const MainContainer = styled('main', {
   alignItems: 'center',
 })
 
-export const Header1 = styled('div', {
-  width: '100vw',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '70px',
-
-  '@media (max-width: 768px)': {
-    width: '100%',
-  },
-})
-
-export const Header2 = styled('div', {
-  width: '100vw',
-  height: '70px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: '1000',
-  background: '#101010',
-  position: 'fixed',
-
-  '@media (max-width: 768px)': {
-    width: '100%',
-  },
-})
-
-export const Header3 = styled('div', {
-  width: 600,
-  display: 'flex',
-  justifyContent: 'left',
-  alignItems: 'center',
-  zIndex: '1000',
-  position: 'fixed',
-
-  img: {
-    width: '185px',
-    height: 'auto',
-  },
-
-  '@media (max-width: 768px)': {
-    width: '100%',
-    padding: '0 12px',
-  },
-})
-
 export const Box1 = styled('div', {
   width: '100%',
   display: 'flex',
@@ -225,7 +179,9 @@ export const ModalOverlay = styled('div', {
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  background: '#00000035',
+  backdropFilter: 'blur(10px)',
+  zIndex: 1000,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
@@ -265,6 +221,50 @@ export const ModalContent = styled('div', {
   },
 })
 
+export const ModalOverlay2 = styled('div', {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: '#00000035',
+  backdropFilter: 'blur(10px)',
+  zIndex: 1000,
+
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+export const ModalContent2 = styled('div', {
+  width: 500,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  textAlign: 'center',
+  padding: '1rem',
+  gap: '.5rem',
+  backgroundColor: '#101010',
+  color: '#DADADA',
+  animation: `${FadeIn} 0.3s ease`,
+
+  '@media (max-width: 768px)': {
+    width: '100%',
+  },
+
+  h6: {
+    width: '100%',
+    fontSize: '1.25rem',
+    fontWeight: '500',
+    color: '#DADADA',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+})
+
 export const InputDiv = styled('div', {
   width: '100%',
   display: 'flex',
@@ -286,6 +286,33 @@ export const InputDiv = styled('div', {
     background: '#6C757D',
     borderTopRightRadius: '5px',
     borderBottomRightRadius: '5px',
+  },
+})
+
+export const InputDiv2 = styled('div', {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  gap: '.5rem',
+
+  label: {
+    fontWeight: '600',
+    fontSize: '.84em',
+  },
+
+  input: {
+    width: '100%',
+    appearance: 'none',
+    outline: 'none',
+    padding: '.375rem .75rem',
+    boxShadow: '0 2px 4px 0 rgba(0,0,0,.05)',
+    borderRadius: '10px',
+    background: '#2b2b3d',
+    border: '1px solid #434351',
+    color: '#c9c9c9',
+    fontSize: '1rem',
   },
 })
 
@@ -428,4 +455,83 @@ export const Footer = styled('footer', {
   color: '#e0e0e0',
   fontSize: '.8em',
   lineHeight: '170%',
+})
+
+export const Alert = styled('div', {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: '.3rem',
+  padding: '8px',
+  textAlign: 'left',
+  borderRadius: '.375rem',
+
+  svg: {
+    flexShrink: 0,
+  },
+
+  span: {
+    fontWeight: '500',
+  },
+
+  variants: {
+    type: {
+      one: {
+        fontSize: '.9em',
+        color: '#055160',
+        background: '#CFF4FC',
+        borderRadius: '1px solid #9eeaf9',
+      },
+      two: {
+        fontSize: '.8em',
+        color: '#664D03',
+        background: '#FFF3CD',
+      },
+    },
+  },
+})
+
+export const Continuar = styled('button', {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '6px 12px',
+  borderRadius: '.375rem',
+  gap: '.2rem',
+  background: '#0d6efd',
+  color: '#fff',
+  fontWeight: '600',
+  fontSize: '1rem',
+
+  variants: {
+    color: {
+      default: {
+        background: '#0d6efd',
+      },
+      green: {
+        background: '#198754',
+      },
+    },
+  },
+})
+
+export const Mensagem = styled('div', {
+  color: '#fff',
+  borderRadius: '10px',
+  fontWeight: '600',
+  fontSize: '.7em',
+
+  variants: {
+    result: {
+      sucess: {
+        padding: '6px 12px',
+        background: 'green',
+      },
+      error: {
+        padding: '6px 12px',
+        background: 'red',
+      },
+    },
+  },
 })
