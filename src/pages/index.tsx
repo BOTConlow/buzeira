@@ -80,7 +80,13 @@ export default function Home() {
   // eslint-disable-next-line prettier/prettier
   const precoUnitarioInicial = 1.50 // Preço unitário por cota
   const total: number = quantidade * getPrecoPorCota(quantidade)
-  const [registerForm, setRegisterForm] = useState({} as RegisterDTO)
+  const [registerForm, setRegisterForm] = useState({
+    cpf: '',
+    celular: '',
+    dataNascimento: '',
+    email: '',
+    nome: '',
+  } as RegisterDTO)
   const [mensagemSucess, setMensagemSucess] = useState('')
   const [mensagemError, setMensagemError] = useState('')
   const [telefone, setTelefone] = useState('')

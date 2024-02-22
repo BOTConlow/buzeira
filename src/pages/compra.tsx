@@ -5,7 +5,6 @@ import { Montserrat } from 'next/font/google'
 import { MainContainer } from '@/styles/compra.styles'
 
 import Header from '@/components/Header'
-import QRCode from 'qrcode.react'
 
 const Vietnam = Montserrat({
   subsets: ['latin'],
@@ -13,12 +12,6 @@ const Vietnam = Montserrat({
 })
 
 export default function Compra() {
-  const chavePix = '06df0db0-b004-4fc0-9ea5-b7c27d486c53'
-  const valorTotalCotas = 1000
-
-  // Montar o payload PIX
-  const payload = `00020101021126BR.GOV.BCB.PIX${chavePix}5204000053039865406${valorTotalCotas}5802BR5913AltoPremio6008BRASILIA62070503***6304A3E5`
-
   return (
     <>
       <Head>
