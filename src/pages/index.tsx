@@ -22,6 +22,7 @@ import {
   Mensagem,
   ModalContent,
   ModalContent2,
+  ModalContent3,
   ModalOverlay,
   ModalOverlay2,
   Participar,
@@ -51,6 +52,7 @@ import {
   X,
 } from 'phosphor-react'
 import Header from '@/components/Header'
+import { useRouter } from 'next/router'
 
 const Vietnam = Montserrat({
   subsets: ['latin'],
@@ -73,6 +75,8 @@ const registerDto = z.object({
 type RegisterDTO = z.infer<typeof registerDto>
 
 export default function Home() {
+  const router = useRouter()
+
   const [page, setPage] = useState(0)
   const [modalVisible, setModalVisible] = useState(false)
   const [modalVisible2, setModalVisible2] = useState(false)
@@ -206,6 +210,10 @@ export default function Home() {
       console.log('Formulário válido:', registerForm)
       setMensagemSucess('Formulário enviado com sucesso!')
       setMensagemError('')
+
+      router.push(
+        `/compra?valor=${total}&quantidade=${quantidade}&comprador=${registerForm.nome}&telefone=${registerForm.celular}&cpf=${registerForm.cpf}`,
+      )
     } else {
       const errorMessages = validationResult.error.errors.map(
         (error) => error.message,
@@ -314,19 +322,44 @@ export default function Home() {
             <p>Compre mais barato!</p>
           </Headline>
           <Box2>
-            <button onClick={() => handleCompra(25)}>
+            <button
+              onClick={() => {
+                handleCompra(25)
+                openModal2()
+              }}
+            >
               <b>25</b> por R$ <b>35,00</b>
             </button>
-            <button onClick={() => handleCompra(50)}>
+            <button
+              onClick={() => {
+                handleCompra(50)
+                openModal2()
+              }}
+            >
               <b>50</b> por R$ <b>65,00</b>
             </button>
-            <button onClick={() => handleCompra(100)}>
+            <button
+              onClick={() => {
+                handleCompra(100)
+                openModal2()
+              }}
+            >
               <b>100</b> por R$ <b>120,00</b>
             </button>
-            <button onClick={() => handleCompra(500)}>
+            <button
+              onClick={() => {
+                handleCompra(500)
+                openModal2()
+              }}
+            >
               <b>500</b> por R$ <b>550,00</b>
             </button>
-            <button onClick={() => handleCompra(1000)}>
+            <button
+              onClick={() => {
+                handleCompra(1000)
+                openModal2()
+              }}
+            >
               <b>1000</b> por R$ <b>1.000,00</b>
             </button>
           </Box2>
@@ -476,7 +509,7 @@ export default function Home() {
                 </button>
               </h6>
             </ModalContent2>
-            <ModalContent2 onClick={(e) => e.stopPropagation()}>
+            <ModalContent3 onClick={(e) => e.stopPropagation()}>
               <Alert type="one">
                 <p>
                   <CheckCircle size={15} color="#055160" />
@@ -596,7 +629,7 @@ export default function Home() {
               {mensagemSucess && (
                 <Mensagem result={'sucess'}>{mensagemSucess}</Mensagem>
               )}
-            </ModalContent2>
+            </ModalContent3>
           </ModalOverlay2>
         )}
       </MainContainer>

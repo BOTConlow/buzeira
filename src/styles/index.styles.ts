@@ -265,6 +265,35 @@ export const ModalContent2 = styled('div', {
   },
 })
 
+export const ModalContent3 = styled('div', {
+  width: 500,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'flex-start',
+  textAlign: 'center',
+  padding: '1rem',
+  gap: '.5rem',
+  backgroundColor: '#101010',
+  color: '#DADADA',
+  animation: `${FadeIn} 0.3s ease`,
+
+  '@media (max-width: 768px)': {
+    width: '100%',
+    overflow: 'auto',
+  },
+
+  h6: {
+    width: '100%',
+    fontSize: '1.25rem',
+    fontWeight: '500',
+    color: '#DADADA',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+})
+
 export const InputDiv = styled('div', {
   width: '100%',
   display: 'flex',
