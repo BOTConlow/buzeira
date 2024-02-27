@@ -443,9 +443,6 @@ export default function Home() {
             </span>
             <small>R$ {total.toFixed(2)}</small>
           </Participar>
-          <div>
-            <p>Preço por cota: R$ {getPrecoPorCota(quantidade).toFixed(2)}</p>
-          </div>
         </Box1>
         <Footer>
           <p>

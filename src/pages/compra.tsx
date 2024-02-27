@@ -12,12 +12,16 @@ import {
   Detalhes,
   Detalhes1,
   Escritas,
+  Footer,
   Info1,
   InputContainer,
   MainContainer,
   PagamentoCheck,
+  Progress,
+  ProgressBar,
   Separator,
   SpanContainer,
+  Timer,
 } from '@/styles/compra.styles'
 import { useEffect, useState } from 'react'
 
@@ -26,7 +30,6 @@ import { QrCodePix } from 'qrcode-pix'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { CheckCircle, Checks, Info, QrCode } from 'phosphor-react'
-import Barra from '@/components/Barra'
 
 const Vietnam = Montserrat({
   subsets: ['latin'],
@@ -40,11 +43,33 @@ export default function Compra() {
   const router = useRouter()
   const { valor, quantidade, comprador, telefone, cpf } = router.query
   const [button, setButton] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(600) // 5 minutos em segundos
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(timeLeft - 1)
+
+      if (timeLeft <= 0) {
+        clearInterval(interval)
+        router.push(`/cotas?quantidade=${quantidade}`)
+      }
+    }, 1000) // Atualize a cada segundo
+
+    return () => clearInterval(interval)
+  }, [quantidade, router, timeLeft])
+
+  const progressPercent = ((600 - timeLeft) / 600) * 100
+
+  const minutes = Math.floor(timeLeft / 60)
+  const seconds = timeLeft % 60
+  const formattedTime = `${String(minutes).padStart(2, '0')}:${String(
+    seconds,
+  ).padStart(2, '0')}`
 
   useEffect(() => {
     setTimeout(() => {
       setButton(true)
-    }, 5000)
+    }, 420000)
   }, [])
 
   useEffect(() => {
@@ -117,7 +142,14 @@ export default function Compra() {
           </Check>
           <Separator />
           <Box2>
-            <Barra />
+            <Timer>
+              <p>
+                Você tem <span>{formattedTime}</span> para pagar
+              </p>
+              <ProgressBar>
+                <Progress style={{ width: `${progressPercent}%` }} />
+              </ProgressBar>
+            </Timer>
             <SpanContainer>
               <p>
                 <span>1</span>
@@ -222,6 +254,12 @@ export default function Compra() {
             </Detalhes>
           </Box2>
         </Box1>
+        <Footer>
+          <p>
+            Copyright © 2022 <b>ALTO PRÊMIO</b>
+          </p>
+          <p>Todos os direitos reservados.</p>
+        </Footer>
       </MainContainer>
     </>
   )

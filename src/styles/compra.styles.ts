@@ -1,4 +1,5 @@
 import { styled } from './stitches.config'
+import { keyframes } from '@stitches/react'
 
 export const MainContainer = styled('main', {
   maxWidth: 600,
@@ -229,4 +230,48 @@ export const Info1 = styled('div', {
   },
 })
 
-export const Info2 = styled('div', {})
+export const Footer = styled('footer', {
+  width: '100vw',
+  padding: '1rem',
+  textAlign: 'center',
+  background: '#191919',
+  color: '#e0e0e0',
+  fontSize: '.8em',
+  lineHeight: '170%',
+})
+
+export const Timer = styled('div', {
+  width: '100%',
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '.5rem',
+
+  p: {
+    fontSize: '16px',
+    color: '#e5e5e5',
+  },
+
+  span: {
+    fontWeight: 'bold',
+    fontSize: '1.3em',
+  },
+})
+
+export const ProgressBar = styled('div', {
+  width: '100%',
+  height: 16,
+  backgroundColor: '#191b1d',
+  borderRadius: '.375rem',
+  overflow: 'hidden',
+})
+
+export const Progress = styled('div', {
+  height: 16,
+  backgroundColor: '#DC3545',
+})
+
+export const AnimPic = keyframes({
+  from: { transform: 'scale(1.0)' },
+  to: { transform: 'scale(1.2)' },
+})
