@@ -266,7 +266,7 @@ export default function Home() {
           <Redes1>
             <Redes2>
               <p>
-                Sorteio <span>17/02/24 às 19h00</span>
+                Sorteio <span>28/02/24 às 19h00</span>
               </p>
             </Redes2>
             <Redes2>
